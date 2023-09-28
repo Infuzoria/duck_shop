@@ -1,3 +1,4 @@
+{% load static %}
 <!doctype html>
 <html lang="en">
 <head>
@@ -13,7 +14,7 @@
     <div class="row mt-3">
         <nav class="navbar navbar-light justify-content-between">
             <a class="navbar-brand" href="#">
-                <img src="../images/duck1.png" alt="">
+                <img src="{% static 'images/duck1.png' %}" alt="">
                 Duuuck Go
             </a>
             <a class="nav-link" href="#">Домашняя страница</a>
@@ -51,7 +52,7 @@
         <div class="col-sm-3">
             <div class="card rounded-3 shadow-sm">
                 <div class="card-header">
-                    <img src="../images/standart.png" alt="">
+                    <img src="{% static 'images/standart.png' %}" alt="">
                 </div>
                 <div class="card-body text-center">
                     <h5 class="card-title">Стандартные уточки</h5>
@@ -62,7 +63,7 @@
         <div class="col-sm-3">
             <div class="card rounded-3 shadow-sm">
                 <div class="card-header">
-                    <img src="../images/collection.png" alt="">
+                    <img src="{% static 'images/collection.png' %}" alt="">
                 </div>
                 <div class="card-body text-center">
                     <h5 class="card-title">Коллекционные уточки</h5>
@@ -73,7 +74,7 @@
         <div class="col-sm-3">
             <div class="card rounded-3 shadow-sm">
                 <div class="card-header">
-                    <img src="../images/new.png" alt="">
+                    <img src="{% static 'images/new.png' %}" alt="">
                 </div>
                 <div class="card-body text-center">
                     <h5 class="card-title">Новинки</h5>
@@ -84,7 +85,7 @@
         <div class="col-sm-3">
             <div class="card rounded-3 shadow-sm">
                 <div class="card-header">
-                    <img src="../images/profession.png" alt="">
+                    <img src="{% static 'images/profession.png' %}" alt="">
                 </div>
                 <div class="card-body text-center">
                     <h5 class="card-title">Утиные профессии</h5>
@@ -107,13 +108,13 @@
 
         <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
             <li class="ms-3"><a class="text-muted" href="#">
-                <img src="../images/social.png" alt="">
+                <img src="{% static 'images/social.png' %}" alt="">
             </a></li>
             <li class="ms-3"><a class="text-muted" href="#">
-                <img src="../images/twitter.png" alt="">
+                <img src="{% static 'images/twitter.png' %}" alt="">
             </a></li>
             <li class="ms-3"><a class="text-muted" href="#">
-                <img src="../images/instagram.png" alt="">
+                <img src="{% static 'images/instagram.png' %}" alt="">
             </a></li>
         </ul>
     </footer>
