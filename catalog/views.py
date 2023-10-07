@@ -14,3 +14,7 @@ def contacts(request):
         # а также передается информация, которую заполнил пользователь
         print(name, email, message)
     return render(request, 'contacts.html')
+
+
+def product_page(request):
+    return render(request, 'product.html')
