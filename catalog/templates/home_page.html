@@ -49,50 +49,22 @@
     </div>
 
     <div class="row">
-        <div class="col-sm-3">
+        {% for object in object_list%}
+        <div class="col-sm-3 mt-3">
             <div class="card rounded-3 shadow-sm">
                 <div class="card-header">
-                    <img src="{% static 'images/standart.png' %}" alt="">
+                    <img src="{% static object.image %}" alt="">
                 </div>
                 <div class="card-body text-center">
-                    <h5 class="card-title">Стандартные уточки</h5>
-                    <a href="#" class="btn btn-outline-warning">Посмотреть</a>
+                    <div class="row">
+                        <h5 class="card-title">{{ object.name }}</h5>
+                        <h7 class="card-title">{{ object.description|truncatechars:100 }}</h7>
+                    </div>
+                    <a href="#" class="btn btn-outline-warning">Всего {{ object.price }} рублей</a>
                 </div>
             </div>
         </div>
-        <div class="col-sm-3">
-            <div class="card rounded-3 shadow-sm">
-                <div class="card-header">
-                    <img src="{% static 'images/collection.png' %}" alt="">
-                </div>
-                <div class="card-body text-center">
-                    <h5 class="card-title">Коллекционные уточки</h5>
-                    <a href="#" class="btn btn-outline-warning">Посмотреть</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-3">
-            <div class="card rounded-3 shadow-sm">
-                <div class="card-header">
-                    <img src="{% static 'images/new.png' %}" alt="">
-                </div>
-                <div class="card-body text-center">
-                    <h5 class="card-title">Новинки</h5>
-                    <a href="#" class="btn btn-outline-warning">Посмотреть</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-3">
-            <div class="card rounded-3 shadow-sm">
-                <div class="card-header">
-                    <img src="{% static 'images/profession.png' %}" alt="">
-                </div>
-                <div class="card-body text-center">
-                    <h5 class="card-title">Утиные профессии</h5>
-                    <a href="#" class="btn btn-outline-warning">Посмотреть</a>
-                </div>
-            </div>
-        </div>
+        {% endfor %}
     </div>
 </div>
 <div class="container mt-5">
