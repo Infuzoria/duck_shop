@@ -1,8 +1,13 @@
 from django.shortcuts import render
+from catalog.models import Product
 
 
 def home_page(request):
-    return render(request, 'home_page.html')
+    product_list = Product.objects.all()
+    context = {
+        'object_list': product_list
+    }
+    return render(request, 'home_page.html', context)
 
 
 def contacts(request):
