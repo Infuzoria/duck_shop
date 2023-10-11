@@ -14,3 +14,8 @@ def path_tag(format_string):
 @register.filter
 def path_filter(text):
     return settings.MEDIA_URL + str(text)
+
+
+@register.simple_tag
+def product_url(pk):
+    return f"/product/{pk}"
