@@ -30,3 +30,16 @@ class Product(models.Model):
     class Meta:
         verbose_name = 'товар'
         verbose_name_plural = 'товары'
+
+
+class Request(models.Model):
+    name = models.CharField(max_length=100, verbose_name='Имя пользователя')
+    email = models.CharField(max_length=100, verbose_name='Email пользователя')
+    message = models.CharField(max_length=500, verbose_name='Сообщение')
+
+    def __str__(self):
+        return f'{self.name} ({self.email})'
+
+    class Meta:
+        verbose_name = 'Ответ'
+        verbose_name_plural = 'Ответы'

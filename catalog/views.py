@@ -1,31 +1,33 @@
 from django.shortcuts import render
-from catalog.models import Product
+from catalog.models import Product, Request
+from django.views.generic import ListView, DetailView, CreateView
 
 
-def home_page(request):
-    product_list = Product.objects.all()
-    context = {
-        'object_list': product_list
-    }
-    return render(request, 'home_page.html', context)
+class ProductListView(ListView):
+    model = Product
+    template_name = 'home_page.html'
 
 
-def contacts(request):
-    if request.method == 'POST':
-        # в переменной request хранится информация о методе, который отправлял пользователь
-        name = request.POST.get('name')
-        email = request.POST.get('email')
-        message = request.POST.get('message')
-        # а также передается информация, которую заполнил пользователь
-        print(name, email, message)
-    return render(request, 'contacts.html')
+class RequestCreateView(CreateView):
+    model = Request
+    template_name = 'contacts.html'
+    fields = ('name', 'email', 'message')
+    success_url = '/contacts'
 
 
-def product(request, pk):
-    context = {
-        "object_name": Product.objects.filter(id=pk)[0].__dict__['name'],
-        "object_description": Product.objects.filter(id=pk)[0].__dict__['description'],
-        "object_image": Product.objects.filter(id=pk)[0].__dict__['image']
-    }
-    #print(context['object_list'][0].__dict__['name'])
-    return render(request, 'product.html', context)
+class ProductDetailView(DetailView):
+    model = Product
+    template_name = 'product.html'
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        queryset = queryset.filter(id=self.kwargs.get('pk'))
+        return queryset
+
+    def get_context_data(self, *args, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+        context_data['object_name'] = Product.objects.filter(id=self.kwargs.get('pk'))[0].__dict__['name']
+        context_data['object_description'] = Product.objects.filter(id=self.kwargs.get('pk'))[0].__dict__['description']
+        context_data['object_image'] = Product.objects.filter(id=self.kwargs.get('pk'))[0].__dict__['image']
+
+        return context_data
