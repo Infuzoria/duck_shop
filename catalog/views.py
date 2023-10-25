@@ -1,13 +1,11 @@
 from django.shortcuts import render
 from catalog.models import Product
+from django.views.generic import ListView
 
 
-def home_page(request):
-    product_list = Product.objects.all()
-    context = {
-        'object_list': product_list
-    }
-    return render(request, 'home_page.html', context)
+class ProductListView(ListView):
+    model = Product
+    template_name = 'home_page.html'
 
 
 def contacts(request):
