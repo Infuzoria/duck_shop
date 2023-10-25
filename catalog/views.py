@@ -1,6 +1,6 @@
 from django.shortcuts import render
-from catalog.models import Product
-from django.views.generic import ListView, DetailView
+from catalog.models import Product, Request
+from django.views.generic import ListView, DetailView, CreateView
 
 
 class ProductListView(ListView):
@@ -8,15 +8,11 @@ class ProductListView(ListView):
     template_name = 'home_page.html'
 
 
-def contacts(request):
-    if request.method == 'POST':
-        # в переменной request хранится информация о методе, который отправлял пользователь
-        name = request.POST.get('name')
-        email = request.POST.get('email')
-        message = request.POST.get('message')
-        # а также передается информация, которую заполнил пользователь
-        print(name, email, message)
-    return render(request, 'contacts.html')
+class RequestCreateView(CreateView):
+    model = Request
+    template_name = 'contacts.html'
+    fields = ('name', 'email', 'message')
+    success_url = '/contacts'
 
 
 class ProductDetailView(DetailView):
