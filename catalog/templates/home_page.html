@@ -27,7 +27,7 @@
                         <h5 class="card-title">{{ object.name }}</h5>
                         <h7 class="card-title">{{ object.description|truncatechars:100 }}</h7>
                     </div>
-                    <a href="#" class="btn btn-warning">Всего {{ object.price }} рублей</a>
+                    <a href="{% product_url object.pk %}" class="btn btn-warning">Всего {{ object.price }} рублей</a>
                 </div>
             </div>
         </div>

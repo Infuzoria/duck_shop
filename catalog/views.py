@@ -21,5 +21,11 @@ def contacts(request):
     return render(request, 'contacts.html')
 
 
-def product_page(request):
-    return render(request, 'product.html')
+def product(request, pk):
+    context = {
+        "object_name": Product.objects.filter(id=pk)[0].__dict__['name'],
+        "object_description": Product.objects.filter(id=pk)[0].__dict__['description'],
+        "object_image": Product.objects.filter(id=pk)[0].__dict__['image']
+    }
+    #print(context['object_list'][0].__dict__['name'])
+    return render(request, 'product.html', context)
