@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from catalog.models import Product
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 
 
 class ProductListView(ListView):
@@ -19,11 +19,19 @@ def contacts(request):
     return render(request, 'contacts.html')
 
 
-def product(request, pk):
-    context = {
-        "object_name": Product.objects.filter(id=pk)[0].__dict__['name'],
-        "object_description": Product.objects.filter(id=pk)[0].__dict__['description'],
-        "object_image": Product.objects.filter(id=pk)[0].__dict__['image']
-    }
-    #print(context['object_list'][0].__dict__['name'])
-    return render(request, 'product.html', context)
+class ProductDetailView(DetailView):
+    model = Product
+    template_name = 'product.html'
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        queryset = queryset.filter(id=self.kwargs.get('pk'))
+        return queryset
+
+    def get_context_data(self, *args, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+        context_data['object_name'] = Product.objects.filter(id=self.kwargs.get('pk'))[0].__dict__['name']
+        context_data['object_description'] = Product.objects.filter(id=self.kwargs.get('pk'))[0].__dict__['description']
+        context_data['object_image'] = Product.objects.filter(id=self.kwargs.get('pk'))[0].__dict__['image']
+
+        return context_data
