@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from catalog.models import Product, Request
+from catalog.models import Product, Request, Post
 from django.views.generic import ListView, DetailView, CreateView
 
 
@@ -31,3 +31,10 @@ class ProductDetailView(DetailView):
         context_data['object_image'] = Product.objects.filter(id=self.kwargs.get('pk'))[0].__dict__['image']
 
         return context_data
+
+
+class PostCreateView(CreateView):
+    model = Post
+    template_name = 'create_post.html'
+    fields = ('title', 'text', 'image', 'date')
+    success_url = '/'
