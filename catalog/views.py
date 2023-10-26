@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from catalog.models import Product, Request, Post
-from django.views.generic import ListView, DetailView, CreateView, UpdateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
 
 class ProductListView(ListView):
@@ -36,17 +36,15 @@ class ProductDetailView(DetailView):
 class PostCreateView(CreateView):
     model = Post
     fields = ('title', 'text', 'image', 'date')
-    success_url = '/'
+    success_url = '/posts'
 
 
 class PostListView(ListView):
     model = Post
-    template_name = 'list_of_posts.html'
 
 
 class PostDetailView(DetailView):
     model = Post
-    template_name = 'detail_post.html'
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -62,8 +60,12 @@ class PostDetailView(DetailView):
         return context_data
 
 
-class PostUpdateView(CreateView):
+class PostUpdateView(UpdateView):
     model = Post
-    template_name = 'post_form.html'
     fields = ('title', 'text', 'image', 'date')
-    success_url = '/'
+    success_url = '/posts'
+
+
+class PostDeleteView(DeleteView):
+    model = Post
+    success_url = '/posts'

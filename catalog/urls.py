@@ -1,6 +1,6 @@
 from django.urls import path
 from catalog.views import (ProductListView, RequestCreateView, ProductDetailView, PostCreateView, PostListView,
-                           PostDetailView, PostUpdateView)
+                           PostDetailView, PostUpdateView, PostDeleteView)
 
 app_name = 'catalog'
 
@@ -12,4 +12,5 @@ urlpatterns = [
     path('product/<int:pk>/', ProductDetailView.as_view(), name='product'),
     path('post/<int:pk>/', PostDetailView.as_view(), name='detail_post'),
     path('post_update/<int:pk>/', PostUpdateView.as_view(), name='post_update'),
+    path('delete/<int:pk>/', PostDeleteView.as_view(), name='post_delete'),
 ]

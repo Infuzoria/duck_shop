@@ -18,8 +18,9 @@
                     <div class="row justify-content-center">
                         <h7 class="card-title">{{ object.text|truncatechars:100 }}</h7>
                     </div>
-                    <a href="{% post_url object.pk %}" class="btn btn-warning">Читать</a>
-                    <a href="{% post_update object.pk %}" class="btn btn-warning">Редактировать</a>
+                    <a href="{% post_url object.pk %}" class="btn btn-sm btn-warning">Читать</a>
+                    <a href="{% post_update object.pk %}" class="btn btn-sm btn-warning">Редактировать</a>
+                    <a href="{% post_delete object.pk %}" class="btn btn-sm btn-warning">Удалить</a>
                 </div>
             </div>
         </div>
