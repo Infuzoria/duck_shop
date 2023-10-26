@@ -19,3 +19,8 @@ def path_filter(text):
 @register.simple_tag
 def product_url(pk):
     return f"/product/{pk}"
+
+
+@register.simple_tag
+def post_url(pk):
+    return f"/post/{pk}"
