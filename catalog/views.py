@@ -38,3 +38,10 @@ class PostCreateView(CreateView):
     template_name = 'create_post.html'
     fields = ('title', 'text', 'image', 'date')
     success_url = '/'
+
+
+class PostListView(ListView):
+    model = Post
+    template_name = 'list_of_posts.html'
+
+
