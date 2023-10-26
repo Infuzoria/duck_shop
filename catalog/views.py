@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from catalog.models import Product, Request, Post
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView
 
 
 class ProductListView(ListView):
@@ -35,7 +35,6 @@ class ProductDetailView(DetailView):
 
 class PostCreateView(CreateView):
     model = Post
-    template_name = 'create_post.html'
     fields = ('title', 'text', 'image', 'date')
     success_url = '/'
 
@@ -61,3 +60,10 @@ class PostDetailView(DetailView):
         context_data['object_image'] = Post.objects.filter(id=self.kwargs.get('pk'))[0].__dict__['image']
 
         return context_data
+
+
+class PostUpdateView(CreateView):
+    model = Post
+    template_name = 'post_form.html'
+    fields = ('title', 'text', 'image', 'date')
+    success_url = '/'

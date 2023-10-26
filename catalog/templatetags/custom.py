@@ -24,3 +24,8 @@ def product_url(pk):
 @register.simple_tag
 def post_url(pk):
     return f"/post/{pk}"
+
+
+@register.simple_tag
+def post_update(pk):
+    return f"/post_update/{pk}"
