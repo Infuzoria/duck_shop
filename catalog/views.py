@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from catalog.models import Product, Request, Post
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from pytils.translit import slugify
 
 
 class ProductListView(ListView):
@@ -38,6 +39,14 @@ class PostCreateView(CreateView):
     fields = ('title', 'text', 'image', 'date')
     success_url = '/posts'
 
+    def form_valid(self, form):
+        if form.is_valid():
+            new_mat = form.save()
+            new_mat.slug = slugify(new_mat.title)
+            new_mat.save()
+
+        return super().form_valid(form)
+
 
 class PostListView(ListView):
     model = Post
@@ -64,6 +73,14 @@ class PostUpdateView(UpdateView):
     model = Post
     fields = ('title', 'text', 'image', 'date')
     success_url = '/posts'
+
+    def form_valid(self, form):
+        if form.is_valid():
+            new_mat = form.save()
+            new_mat.slug = slugify(new_mat.title)
+            new_mat.save()
+
+        return super().form_valid(form)
 
 
 class PostDeleteView(DeleteView):
