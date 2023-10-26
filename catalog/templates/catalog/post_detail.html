@@ -8,16 +8,10 @@
         <div class="row justify-content-center mt-2">
             <img src="{% path_tag object_image %}" alt="">
         </div>
-        <div class="row justify-content-center mt-1">
-            <a href="#" class="btn btn-outline-warning">Всего 490 рублей</a>
-        </div>
     </div>
     <div class="jumbotron col-7 text-white rounded bg-warning">
         <div class="col-12">
-            <h1 class="font-italic">"В детстве у меня не было резиновой уточки, поэтому я купался с замороженной
-                курицей."</h1>
-            <p class="lead text-right mb-0"><a href="#" class="text-white font-weight-bold"> - Директор Duuuck
-                Go</a></p>
+            <h1 class="font-italic">{{object_title}}</h1>
         </div>
     </div>
 </div>
@@ -25,16 +19,10 @@
 <main role="main" class="container">
     <div class="row mt-3">
         <div class="col-md-12 blog-main">
-
             <div class="blog-post">
-                <h2 class="blog-post-title">{{object_name}}</h2>
-
-                <p>{{object_description}}</p>
+                <p>{{object_text}}</p>
             </div><!-- /.blog-post -->
-
         </div><!-- /.blog-catalog -->
-
     </div><!-- /.row -->
-
 </main><!-- /.container -->
 {% endblock%}
