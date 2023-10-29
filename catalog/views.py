@@ -129,3 +129,8 @@ class VersionCreateView(CreateView):
 
 class VersionListView(ListView):
     model = Version
+
+
+class VersionDeleteView(DeleteView):
+    model = Version
+    success_url = '/versions'
