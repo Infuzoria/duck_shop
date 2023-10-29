@@ -31,7 +31,9 @@
                     <div class="row justify-content-center">
                         <h7 class="card-title">{{ object.description|truncatechars:100 }}</h7>
                     </div>
-                    <a href="{% product_url object.pk %}" class="btn btn-warning">Всего {{ object.price }} рублей</a>
+                    <a href="{% product_url object.pk %}" class="btn btn-sm btn-warning">Просмотр</a>
+                    <a href="{% product_update object.pk %}" class="btn btn-sm btn-warning">Редактировать</a>
+                    <a href="{% product_url object.pk %}" class="btn btn-sm btn-warning">Удалить</a>
                 </div>
             </div>
         </div>

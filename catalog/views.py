@@ -11,6 +11,12 @@ class ProductCreateView(CreateView):
     success_url = '/'
 
 
+class ProductUpdateView(UpdateView):
+    model = Product
+    form_class = ProductForm
+    success_url = '/'
+
+
 class ProductListView(ListView):
     model = Product
     template_name = 'home_page.html'
