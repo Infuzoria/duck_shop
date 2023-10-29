@@ -44,3 +44,8 @@ def post_delete(pk):
 @register.simple_tag
 def product_delete(pk):
     return f"/delete_product/{pk}"
+
+
+@register.simple_tag
+def version_delete(pk):
+    return f"/delete_version/{pk}"
