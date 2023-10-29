@@ -2,6 +2,7 @@ from django.shortcuts import render
 from catalog.models import Product, Request, Post
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from pytils.translit import slugify
+from django.urls import reverse
 
 
 class ProductListView(ListView):
@@ -51,6 +52,11 @@ class PostCreateView(CreateView):
 class PostListView(ListView):
     model = Post
 
+    def get_queryset(self, *args, **kwargs):
+        queryset = super().get_queryset(*args, **kwargs)
+        queryset = queryset.filter(is_published=True)
+        return queryset
+
 
 class PostDetailView(DetailView):
     model = Post
@@ -65,8 +71,15 @@ class PostDetailView(DetailView):
         context_data['object_title'] = Post.objects.filter(id=self.kwargs.get('pk'))[0].__dict__['title']
         context_data['object_text'] = Post.objects.filter(id=self.kwargs.get('pk'))[0].__dict__['text']
         context_data['object_image'] = Post.objects.filter(id=self.kwargs.get('pk'))[0].__dict__['image']
+        context_data['views_count'] = Post.objects.filter(id=self.kwargs.get('pk'))[0].__dict__['views_count']
 
         return context_data
+
+    def get_object(self, queryset=None):
+        self.object = super().get_object(queryset)
+        self.object.views_count += 1
+        self.object.save()
+        return self.object
 
 
 class PostUpdateView(UpdateView):
@@ -81,6 +94,9 @@ class PostUpdateView(UpdateView):
             new_mat.save()
 
         return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse('catalog:post_view', args=[self.kwargs.get('pk')])
 
 
 class PostDeleteView(DeleteView):
