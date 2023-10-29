@@ -41,10 +41,21 @@ class ProductDetailView(DetailView):
         return queryset
 
     def get_context_data(self, *args, **kwargs):
+        versions = Version.objects.filter(product=self.kwargs.get('pk'), is_active=True)
+        if len(versions) > 0:
+            active_version = versions[len(versions)-1]
+            print(versions)
+        else:
+            active_version = None
+
         context_data = super().get_context_data(**kwargs)
         context_data['object_name'] = Product.objects.filter(id=self.kwargs.get('pk'))[0].__dict__['name']
         context_data['object_description'] = Product.objects.filter(id=self.kwargs.get('pk'))[0].__dict__['description']
         context_data['object_image'] = Product.objects.filter(id=self.kwargs.get('pk'))[0].__dict__['image']
+        if active_version:
+            self.object.active_version = str(active_version)
+            self.object.save()
+            context_data['active_version'] = active_version
 
         return context_data
 
@@ -126,7 +137,7 @@ class PostDeleteView(DeleteView):
 class VersionCreateView(CreateView):
     model = Version
     form_class = VersionForm
-    success_url = '/'
+    success_url = '/versions'
 
 
 class VersionUpdateView(UpdateView):

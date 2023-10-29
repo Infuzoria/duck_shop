@@ -24,6 +24,7 @@ class Product(models.Model):
     price = models.IntegerField(verbose_name='Цена')
     date_of_creation = models.DateField(default=datetime.date.today, verbose_name='Дата создания')
     last_modified_date = models.DateField(default=datetime.date.today, verbose_name='Дата последнего изменения')
+    active_version = models.CharField(max_length=100, **NULLABLE, verbose_name='Версия')
 
     def __str__(self):
         return f'{self.name} ({self.category})'
@@ -70,7 +71,7 @@ class Version(models.Model):
     is_active = models.BooleanField(default=True, verbose_name='Признак версии')
 
     def __str__(self):
-        return f'{self.version_name} ({self.product})'
+        return f'{self.version_number} ({self.version_name})'
 
     class Meta:
         verbose_name = 'Версия'
