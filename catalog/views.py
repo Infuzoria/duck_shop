@@ -1,5 +1,5 @@
-from catalog.forms import ProductForm
-from catalog.models import Product, Request, Post
+from catalog.forms import ProductForm, VersionForm
+from catalog.models import Product, Request, Post, Version
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from pytils.translit import slugify
 from django.urls import reverse
@@ -119,3 +119,9 @@ class PostUpdateView(UpdateView):
 class PostDeleteView(DeleteView):
     model = Post
     success_url = '/posts'
+
+
+class VersionCreateView(CreateView):
+    model = Version
+    form_class = VersionForm
+    success_url = '/'
