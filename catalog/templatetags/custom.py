@@ -23,7 +23,7 @@ def product_url(pk):
 
 @register.simple_tag
 def post_url(pk):
-    return f"/post/{pk}"
+    return f"/view/{pk}"
 
 
 @register.simple_tag

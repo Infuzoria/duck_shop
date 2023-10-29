@@ -2,6 +2,7 @@ from django.shortcuts import render
 from catalog.models import Product, Request, Post
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from pytils.translit import slugify
+from django.urls import reverse
 
 
 class ProductListView(ListView):
@@ -93,6 +94,9 @@ class PostUpdateView(UpdateView):
             new_mat.save()
 
         return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse('catalog:post_view', args=[self.kwargs.get('pk')])
 
 
 class PostDeleteView(DeleteView):
