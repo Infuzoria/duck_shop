@@ -1,5 +1,7 @@
-from catalog.forms import ProductForm
-from catalog.models import Product, Request, Post
+from django.shortcuts import get_object_or_404, redirect
+
+from catalog.forms import ProductForm, VersionForm
+from catalog.models import Product, Request, Post, Version
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from pytils.translit import slugify
 from django.urls import reverse
@@ -39,10 +41,21 @@ class ProductDetailView(DetailView):
         return queryset
 
     def get_context_data(self, *args, **kwargs):
+        versions = Version.objects.filter(product=self.kwargs.get('pk'), is_active=True)
+        if len(versions) > 0:
+            active_version = versions[len(versions)-1]
+            print(versions)
+        else:
+            active_version = None
+
         context_data = super().get_context_data(**kwargs)
         context_data['object_name'] = Product.objects.filter(id=self.kwargs.get('pk'))[0].__dict__['name']
         context_data['object_description'] = Product.objects.filter(id=self.kwargs.get('pk'))[0].__dict__['description']
         context_data['object_image'] = Product.objects.filter(id=self.kwargs.get('pk'))[0].__dict__['image']
+        if active_version:
+            self.object.active_version = str(active_version)
+            self.object.save()
+            context_data['active_version'] = active_version
 
         return context_data
 
@@ -119,3 +132,35 @@ class PostUpdateView(UpdateView):
 class PostDeleteView(DeleteView):
     model = Post
     success_url = '/posts'
+
+
+class VersionCreateView(CreateView):
+    model = Version
+    form_class = VersionForm
+    success_url = '/versions'
+
+
+class VersionUpdateView(UpdateView):
+    model = Version
+    form_class = VersionForm
+    success_url = '/versions'
+
+
+class VersionListView(ListView):
+    model = Version
+
+
+class VersionDeleteView(DeleteView):
+    model = Version
+    success_url = '/versions'
+
+
+def toggle_activity(request, pk):
+    version_item = get_object_or_404(Version, pk=pk)
+    if version_item.is_active:
+        version_item.is_active = False
+    else:
+        version_item.is_active = True
+
+    version_item.save()
+    return redirect(reverse('catalog:versions'))

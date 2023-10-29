@@ -9,7 +9,7 @@ class Category(models.Model):
     description = models.CharField(max_length=800, verbose_name='Описание')
 
     def __str__(self):
-        return f'{self.name} ({self.description})'
+        return f'{self.name}'
 
     class Meta:
         verbose_name = 'категория'
@@ -24,6 +24,7 @@ class Product(models.Model):
     price = models.IntegerField(verbose_name='Цена')
     date_of_creation = models.DateField(default=datetime.date.today, verbose_name='Дата создания')
     last_modified_date = models.DateField(default=datetime.date.today, verbose_name='Дата последнего изменения')
+    active_version = models.CharField(max_length=100, **NULLABLE, verbose_name='Версия')
 
     def __str__(self):
         return f'{self.name} ({self.category})'
@@ -61,3 +62,17 @@ class Post(models.Model):
     class Meta:
         verbose_name = 'Пост'
         verbose_name_plural = 'Посты'
+
+
+class Version(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='Продукт')
+    version_number = models.CharField(max_length=15, verbose_name='Номер версии')
+    version_name = models.CharField(max_length=100, verbose_name='Название версии')
+    is_active = models.BooleanField(default=True, verbose_name='Признак версии')
+
+    def __str__(self):
+        return f'{self.version_number} ({self.version_name})'
+
+    class Meta:
+        verbose_name = 'Версия'
+        verbose_name_plural = 'Версии'

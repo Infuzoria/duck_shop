@@ -1,5 +1,5 @@
 from django import forms
-from catalog.models import Product
+from catalog.models import Product, Version
 
 PROHIBITED_CATEGORIES = ['казино', 'криптовалюта', 'крипта', 'баржа', 'дешево', 'бесплатно', 'обман',
                          'полиция', 'радар']
@@ -27,3 +27,9 @@ class ProductForm(forms.ModelForm):
 
         else:
             raise forms.ValidationError('Это запрещенная категория, данный товар нельзя разместить на странице')
+
+
+class VersionForm(forms.ModelForm):
+    class Meta:
+        model = Version
+        exclude = ('is_active',)
