@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load custom %}
+
+<div class="container">
+
+    <div class="row">
+        {% for object in object_list%}
+        <div class="col-4 mt-3">
+            <div class="card border-warning rounded-3 shadow-sm">
+                <div class="card-header bg-white text-center">
+                    <h5 class="card-title">Версия {{ object.version_number }}</h5>
+                </div>
+                <div class="card-body text-center">
+                    <div class="row justify-content-center">
+                        <h7 class="card-title">{{ object.version_name }}</h7>
+                    </div>
+                    <div class="row justify-content-center">
+                        <h7 class="card-title">{{ object.product }}</h7>
+                    </div>
+                    <a href="#" class="btn btn-sm btn-warning">Редактировать</a>
+                    <a href="#" class="btn btn-sm btn-warning">Удалить</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

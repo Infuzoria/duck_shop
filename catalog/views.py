@@ -125,3 +125,7 @@ class VersionCreateView(CreateView):
     model = Version
     form_class = VersionForm
     success_url = '/'
+
+
+class VersionListView(ListView):
+    model = Version
