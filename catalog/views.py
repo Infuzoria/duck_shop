@@ -47,6 +47,11 @@ class ProductDetailView(DetailView):
         return context_data
 
 
+class ProductDeleteView(DeleteView):
+    model = Product
+    success_url = '/'
+
+
 class PostCreateView(CreateView):
     model = Post
     fields = ('title', 'text', 'image', 'date')
