@@ -5,7 +5,14 @@ PROHIBITED_CATEGORIES = ['казино', 'криптовалюта', 'крипт
                          'полиция', 'радар']
 
 
-class ProductForm(forms.ModelForm):
+class StyleFormMixin:
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs['class'] = 'form-control'
+
+
+class ProductForm(StyleFormMixin, forms.ModelForm):
     class Meta:
         model = Product
         exclude = ('date_of_creation', 'last_modified_date')
@@ -29,7 +36,7 @@ class ProductForm(forms.ModelForm):
             raise forms.ValidationError('Это запрещенная категория, данный товар нельзя разместить на странице')
 
 
-class VersionForm(forms.ModelForm):
+class VersionForm(StyleFormMixin, forms.ModelForm):
     class Meta:
         model = Version
         exclude = ('is_active',)
