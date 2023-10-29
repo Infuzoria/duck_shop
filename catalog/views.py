@@ -1,8 +1,20 @@
-from django.shortcuts import render
+from catalog.forms import ProductForm
 from catalog.models import Product, Request, Post
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from pytils.translit import slugify
 from django.urls import reverse
+
+
+class ProductCreateView(CreateView):
+    model = Product
+    form_class = ProductForm
+    success_url = '/'
+
+
+class ProductUpdateView(UpdateView):
+    model = Product
+    form_class = ProductForm
+    success_url = '/'
 
 
 class ProductListView(ListView):
@@ -33,6 +45,11 @@ class ProductDetailView(DetailView):
         context_data['object_image'] = Product.objects.filter(id=self.kwargs.get('pk'))[0].__dict__['image']
 
         return context_data
+
+
+class ProductDeleteView(DeleteView):
+    model = Product
+    success_url = '/'
 
 
 class PostCreateView(CreateView):
