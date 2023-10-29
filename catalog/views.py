@@ -1,8 +1,14 @@
-from django.shortcuts import render
+from catalog.forms import ProductForm
 from catalog.models import Product, Request, Post
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from pytils.translit import slugify
 from django.urls import reverse
+
+
+class ProductCreateView(CreateView):
+    model = Product
+    form_class = ProductForm
+    success_url = '/'
 
 
 class ProductListView(ListView):
