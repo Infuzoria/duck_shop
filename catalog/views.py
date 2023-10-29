@@ -1,3 +1,5 @@
+from django.shortcuts import get_object_or_404, redirect
+
 from catalog.forms import ProductForm, VersionForm
 from catalog.models import Product, Request, Post, Version
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
@@ -140,3 +142,14 @@ class VersionListView(ListView):
 class VersionDeleteView(DeleteView):
     model = Version
     success_url = '/versions'
+
+
+def toggle_activity(request, pk):
+    version_item = get_object_or_404(Version, pk=pk)
+    if version_item.is_active:
+        version_item.is_active = False
+    else:
+        version_item.is_active = True
+
+    version_item.save()
+    return redirect(reverse('catalog:versions'))

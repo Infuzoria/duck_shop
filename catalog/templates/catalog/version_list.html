@@ -20,6 +20,11 @@
                     </div>
                     <a href="{% version_update object.pk %}" class="btn btn-sm btn-warning">Редактировать</a>
                     <a href="{% version_delete object.pk %}" class="btn btn-sm btn-warning">Удалить</a>
+                    {% if object.is_active %}
+                        <a href="{% url 'catalog:toggle_activity' object.pk %}" class="btn btn-sm mt-2 btn-warning">Деактивировать</a>
+                    {% else %}
+                        <a href="{% url 'catalog:toggle_activity' object.pk %}" class="btn btn-sm mt-2 btn-success">Активировать</a>
+                    {% endif %}
                 </div>
             </div>
         </div>
