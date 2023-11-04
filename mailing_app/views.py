@@ -1,5 +1,5 @@
-from mailing_app.forms import ClientForm, TextForm
-from mailing_app.models import Client, Text
+from mailing_app.forms import ClientForm, TextForm, NewsletterForm
+from mailing_app.models import Client, Text, Newsletter
 from django.views.generic import CreateView, ListView, UpdateView, DeleteView
 
 
@@ -43,3 +43,9 @@ class TextUpdateView(UpdateView):
 class TextDeleteView(DeleteView):
     model = Text
     success_url = '/texts'
+
+
+class NewsletterCreateView(CreateView):
+    model = Newsletter
+    form_class = NewsletterForm
+    success_url = '/letters'
