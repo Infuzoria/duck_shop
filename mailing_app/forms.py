@@ -6,7 +6,14 @@ PROHIBITED_CATEGORIES = ['казино', 'криптовалюта', 'крипт
                          'полиция', 'радар']
 
 
-class ClientForm(forms.ModelForm):
+class StyleFormMixin:
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs['class'] = 'form-control'
+
+
+class ClientForm(StyleFormMixin, forms.ModelForm):
     class Meta:
         model = Client
         fields = '__all__'
@@ -21,7 +28,7 @@ class ClientForm(forms.ModelForm):
             raise forms.ValidationError('Адрес почты введен некорректно')
 
 
-class TextForm(forms.ModelForm):
+class TextForm(StyleFormMixin, forms.ModelForm):
     class Meta:
         model = Text
         fields = '__all__'
