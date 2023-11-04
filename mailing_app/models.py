@@ -25,3 +25,15 @@ class Newsletter(models.Model):
     class Meta:
         verbose_name = 'рассылка'
         verbose_name_plural = 'рассылки'
+
+
+class Text(models.Model):
+    topic = models.CharField(max_length=100, verbose_name='Тема письма')
+    text = models.TextField(verbose_name='Тело письма')
+
+    def __str__(self):
+        return f'{self.topic} ({self.text})'
+
+    class Meta:
+        verbose_name = 'сообщение'
+        verbose_name_plural = 'сообщения'
