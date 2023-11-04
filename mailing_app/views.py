@@ -1,5 +1,9 @@
-from django.shortcuts import render
+from mailing_app.forms import ClientForm
+from mailing_app.models import Client
+from django.views.generic import CreateView, ListView
 
 
-def index(request):
-    return render(request, 'mailing_app/base.html')
+class ClientCreateView(CreateView):
+    model = Client
+    form_class = ClientForm
+    success_url = '/clients'
