@@ -47,10 +47,20 @@
         </div>
     </header>
 
-    <div class="nav-scroller py-1 mb-2">
+    <div class="py-1 mb-2">
         <nav class="nav d-flex justify-content-between">
             <a class="p-2 text-dark" href="/">Домашняя страница</a>
-            <a class="p-2 text-dark" href="/mailing/">Управление рассылками</a>
+            <div class="btn-group" role="group">
+                <button id="btnGroupDrop1" type="button" class="btn dropdown-toggle"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Управление рассылками
+                </button>
+                <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                    <a class="dropdown-item" href="#">Пользователи</a>
+                    <a class="dropdown-item" href="#">Сообщения</a>
+                    <a class="dropdown-item" href="#">Рассылки</a>
+                </div>
+            </div>
             <a class="p-2 text-dark" href="#">Сотрудничество</a>
             <a class="p-2 text-dark" href="#">Оплата</a>
             <a class="p-2 text-dark" href="#">Доставка</a>
