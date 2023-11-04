@@ -38,3 +38,8 @@ class TextUpdateView(UpdateView):
     model = Text
     form_class = TextForm
     success_url = '/texts'
+
+
+class TextDeleteView(DeleteView):
+    model = Text
+    success_url = '/texts'
