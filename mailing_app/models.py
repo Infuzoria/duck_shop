@@ -37,3 +37,16 @@ class Text(models.Model):
     class Meta:
         verbose_name = 'сообщение'
         verbose_name_plural = 'сообщения'
+
+
+class Logs(models.Model):
+    date = models.DateField(verbose_name='Дата и время последней попытки')
+    status = models.CharField(max_length=50, verbose_name='Статус попытки')
+    reply = models.CharField(max_length=300, verbose_name='Ответ почтового сервера')
+
+    def __str__(self):
+        return f'{self.date} {self.status} ({self.reply})'
+
+    class Meta:
+        verbose_name = 'лог'
+        verbose_name_plural = 'логи'
