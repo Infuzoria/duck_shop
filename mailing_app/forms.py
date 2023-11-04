@@ -1,6 +1,6 @@
 import re
 from django import forms
-from mailing_app.models import Client, Text
+from mailing_app.models import Client, Text, Newsletter
 
 PROHIBITED_CATEGORIES = ['казино', 'криптовалюта', 'крипта', 'баржа', 'дешево', 'бесплатно', 'обман',
                          'полиция', 'радар']
@@ -50,3 +50,9 @@ class TextForm(StyleFormMixin, forms.ModelForm):
 
         else:
             raise forms.ValidationError('В сообщении присутствует упоминание запрещенной категории')
+
+
+class NewsletterForm (StyleFormMixin, forms.ModelForm):
+    class Meta:
+        model = Text
+        exclude = ('status',)

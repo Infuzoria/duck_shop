@@ -21,7 +21,7 @@ class Text(models.Model):
     text = models.TextField(verbose_name='Тело письма')
 
     def __str__(self):
-        return f'{self.topic} ({self.text})'
+        return f'{self.topic}'
 
     class Meta:
         verbose_name = 'сообщение'
