@@ -28,3 +28,13 @@ class TextCreateView(CreateView):
     model = Text
     form_class = TextForm
     success_url = '/texts'
+
+
+class TextListView(ListView):
+    model = Text
+
+
+class TextUpdateView(UpdateView):
+    model = Text
+    form_class = TextForm
+    success_url = '/texts'
