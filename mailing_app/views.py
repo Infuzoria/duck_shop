@@ -7,3 +7,7 @@ class ClientCreateView(CreateView):
     model = Client
     form_class = ClientForm
     success_url = '/clients'
+
+
+class ClientListView(ListView):
+    model = Client
