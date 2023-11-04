@@ -30,6 +30,7 @@
                         <h7 class="card-title">{{ object.text|truncatechars:100 }}</h7>
                     </div>
                     <a href="{% url 'mailing_app:update_client' object.pk %}" class="btn btn-sm btn-warning">Редактировать</a>
+                    <a href="{% url 'mailing_app:delete_client' object.pk %}" class="btn btn-sm btn-warning">Удалить</a>
                 </div>
             </div>
         </div>

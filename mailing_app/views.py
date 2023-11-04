@@ -1,6 +1,6 @@
 from mailing_app.forms import ClientForm
 from mailing_app.models import Client
-from django.views.generic import CreateView, ListView, UpdateView
+from django.views.generic import CreateView, ListView, UpdateView, DeleteView
 
 
 class ClientCreateView(CreateView):
@@ -16,4 +16,9 @@ class ClientListView(ListView):
 class ClientUpdateView(UpdateView):
     model = Client
     form_class = ClientForm
+    success_url = '/clients'
+
+
+class ClientDeleteView(DeleteView):
+    model = Client
     success_url = '/clients'
