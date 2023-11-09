@@ -59,3 +59,8 @@ class NewsletterUpdateView(UpdateView):
     model = Newsletter
     form_class = NewsletterForm
     success_url = '/newsletters'
+
+
+class NewsletterDeleteView(DeleteView):
+    model = Newsletter
+    success_url = '/newsletters'
