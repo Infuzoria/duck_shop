@@ -53,3 +53,9 @@ class NewsletterCreateView(CreateView):
 
 class NewsletterListView(ListView):
     model = Newsletter
+
+
+class NewsletterUpdateView(UpdateView):
+    model = Newsletter
+    form_class = NewsletterForm
+    success_url = '/newsletters'

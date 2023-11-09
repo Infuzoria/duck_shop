@@ -41,7 +41,7 @@
                     <div class="row justify-content-center">
                         <h7 class="card-title">{{ object.message|truncatechars:100 }}</h7>
                     </div>
-                    <a href="#" class="btn btn-sm btn-warning">Редактировать</a>
+                    <a href="{% url 'mailing_app:update_newsletter' object.pk %}" class="btn btn-sm btn-warning">Редактировать</a>
                     <a href="#" class="btn btn-sm btn-warning">Удалить</a>
                 </div>
             </div>
