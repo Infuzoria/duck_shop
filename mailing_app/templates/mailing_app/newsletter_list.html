@@ -20,16 +20,26 @@
             <div class="card border-warning rounded-3 shadow-sm">
                 <div class="card-body text-center">
                     <div class="row justify-content-center">
-                        <h5 class="card-title">{{ object.start_time }}</h5>
+                        <h5 class="card-title">Время начала: {{ object.start_time }}</h5>
                     </div>
                     <div class="row justify-content-center">
-                        <h5 class="card-title">{{ object.stop_time }}</h5>
+                        <h5 class="card-title">Время окончания: {{ object.stop_time }}</h5>
                     </div>
+                    {% if object.period == 'day' %}
+                        <div class="row justify-content-center">
+                            <h5 class="card-title">Периодичность: один раз в день</h5>
+                        </div>
+                    {% elif object.period == 'week' %}
+                        <div class="row justify-content-center">
+                            <h5 class="card-title">Периодичность: один раз в неделю</h5>
+                        </div>
+                    {% elif object.period == 'month' %}
+                        <div class="row justify-content-center">
+                            <h5 class="card-title">Периодичность: один раз в месяц</h5>
+                        </div>
+                    {% endif %}
                     <div class="row justify-content-center">
-                        <h5 class="card-title">{{ object.period }}</h5>
-                    </div>
-                    <div class="row justify-content-center">
-                        <h7 class="card-title">{{ object.text|truncatechars:100 }}</h7>
+                        <h7 class="card-title">{{ object.message|truncatechars:100 }}</h7>
                     </div>
                     <a href="#" class="btn btn-sm btn-warning">Редактировать</a>
                     <a href="#" class="btn btn-sm btn-warning">Удалить</a>
