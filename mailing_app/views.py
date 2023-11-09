@@ -48,4 +48,8 @@ class TextDeleteView(DeleteView):
 class NewsletterCreateView(CreateView):
     model = Newsletter
     form_class = NewsletterForm
-    success_url = '/letters'
+    success_url = '/newsletters'
+
+
+class NewsletterListView(ListView):
+    model = Newsletter

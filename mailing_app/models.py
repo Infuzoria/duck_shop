@@ -42,8 +42,8 @@ class Newsletter(models.Model):
         ('launched', 'Запущена'),
     )
 
-    start_time = models.DateField(verbose_name='Время начала рассылки')
-    stop_time = models.DateField(verbose_name='Время окончания рассылки')
+    start_time = models.CharField(verbose_name='Время начала рассылки')
+    stop_time = models.CharField(verbose_name='Время окончания рассылки')
     period = models.CharField(max_length=100, choices=PERIODICITY, verbose_name=' Периодичность рассылки')
     status = models.CharField(default='created', max_length=20, choices=STATUS, verbose_name='Статус рассылки')
     message = models.ForeignKey(Text, on_delete=models.CASCADE, verbose_name='Текст рассылки')

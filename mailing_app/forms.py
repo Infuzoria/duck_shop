@@ -54,5 +54,23 @@ class TextForm(StyleFormMixin, forms.ModelForm):
 
 class NewsletterForm (StyleFormMixin, forms.ModelForm):
     class Meta:
-        model = Text
+        model = Newsletter
         exclude = ('status',)
+
+    def clean_start_time(self):
+        cleaned_data = self.cleaned_data.get('start_time')
+        regex = re.compile(r'\b([01]?[0-9]|2[0-3]):[0-5][0-9]\b')
+
+        if re.fullmatch(regex, cleaned_data):
+            return cleaned_data
+        else:
+            raise forms.ValidationError('Формат времени должен быть следующий: чч:мм')
+
+    def clean_stop_time(self):
+        cleaned_data = self.cleaned_data.get('stop_time')
+        regex = re.compile(r'\b([01]?[0-9]|2[0-3]):[0-5][0-9]\b')
+
+        if re.fullmatch(regex, cleaned_data):
+            return cleaned_data
+        else:
+            raise forms.ValidationError('Формат времени должен быть следующий: чч:мм')
