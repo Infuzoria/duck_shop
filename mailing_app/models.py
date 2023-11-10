@@ -59,7 +59,7 @@ class Newsletter(models.Model):
 
 
 class Logs(models.Model):
-    date = models.DateField(verbose_name='Дата и время последней попытки')
+    date = models.CharField(verbose_name='Дата и время последней попытки')
     status = models.BooleanField(verbose_name='Статус рассылки')
     error_msg = models.CharField(default='None', max_length=300, verbose_name='Ответ почтового сервера')
     client = models.ForeignKey(Client, on_delete=models.CASCADE, verbose_name='Пользователь')
