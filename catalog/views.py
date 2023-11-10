@@ -6,6 +6,8 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from pytils.translit import slugify
 from django.urls import reverse
 
+from django.core.mail import send_mail
+
 
 class ProductCreateView(CreateView):
     model = Product
@@ -90,6 +92,8 @@ class PostListView(ListView):
 
 class PostDetailView(DetailView):
     model = Post
+
+    send_mail("Django", "Test message", "tv_pavlovich@mail.ru", ["alexa.sazhaeva@gmail.com"], fail_silently=False,)
 
     def get_queryset(self):
         queryset = super().get_queryset()
