@@ -44,6 +44,7 @@ class Newsletter(models.Model):
 
     start_time = models.CharField(verbose_name='Время начала рассылки')
     stop_time = models.CharField(verbose_name='Время окончания рассылки')
+    last_time = models.CharField(**NULLABLE, verbose_name='Время последней рассылки')
     period = models.CharField(max_length=100, choices=PERIODICITY, verbose_name=' Периодичность рассылки')
     status = models.CharField(default='created', max_length=20, choices=STATUS, verbose_name='Статус рассылки')
     message = models.ForeignKey(Text, on_delete=models.CASCADE, verbose_name='Текст рассылки')
@@ -58,7 +59,7 @@ class Newsletter(models.Model):
 
 
 class Logs(models.Model):
-    date = models.DateField(verbose_name='Дата и время последней попытки')
+    date = models.CharField(verbose_name='Дата и время последней попытки')
     status = models.BooleanField(verbose_name='Статус рассылки')
     error_msg = models.CharField(default='None', max_length=300, verbose_name='Ответ почтового сервера')
     client = models.ForeignKey(Client, on_delete=models.CASCADE, verbose_name='Пользователь')

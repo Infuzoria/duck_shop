@@ -55,7 +55,7 @@ class TextForm(StyleFormMixin, forms.ModelForm):
 class NewsletterForm (StyleFormMixin, forms.ModelForm):
     class Meta:
         model = Newsletter
-        exclude = ('status',)
+        exclude = ('status', 'last_time')
 
     def clean_start_time(self):
         cleaned_data = self.cleaned_data.get('start_time')
