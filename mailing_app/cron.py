@@ -5,7 +5,7 @@ from datetime import datetime
 from django.conf import settings
 
 
-def start_mailing():
+def start_mailing_job():
 
     periodicity = {'day': 1, 'week': 7, 'month': 31}
     is_successfully = False

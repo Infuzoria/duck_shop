@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'catalog',
     'mailing_app',
+    'django_crontab',
 ]
 
 MIDDLEWARE = [
@@ -140,3 +141,7 @@ EMAIL_HOST_USER = "duuuck.go@gmail.com"
 EMAIL_HOST_PASSWORD = "oqln eogf oqgz xwqo"
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
+
+CRONJOBS = [
+    ('*/5 * * * *', 'mailing_app.cron.start_mailing_job')
+]
