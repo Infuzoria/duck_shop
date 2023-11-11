@@ -12,6 +12,7 @@ django = "^4.2.5"
 psycopg2-binary = "^2.9.8"
 pillow = "^10.0.1"
 ipython = "^8.16.1"
+django-crontab = "^0.7.1"
 
 
 
