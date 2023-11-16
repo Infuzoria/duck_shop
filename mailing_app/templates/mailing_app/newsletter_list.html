@@ -12,8 +12,9 @@
             <a href="/create_newsletter" class="btn btn-warning mr-2">Добавить рассылку</a>
             <form action="{% url 'mailing_app:list_of_newsletters' %}" method="post">
                 {% csrf_token %}
-                <button type="submit" class="btn btn-warning">Запустить вручную</button>
+                <button type="submit" class="btn btn-warning mr-2">Запустить вручную</button>
             </form>
+            <a href="/logs" class="btn btn-warning">Посмотреть логи</a>
         </div>
     </div>
 </div>
