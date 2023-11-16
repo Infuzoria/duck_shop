@@ -1,6 +1,8 @@
 from mailing_app.forms import ClientForm, TextForm, NewsletterForm
-from mailing_app.models import Client, Text, Newsletter
+from mailing_app.models import Client, Text, Newsletter, Logs
 from django.views.generic import CreateView, ListView, UpdateView, DeleteView
+from mailing_app.cron import start_mailing_job
+from django.shortcuts import redirect
 
 
 class ClientCreateView(CreateView):
@@ -64,3 +66,7 @@ class NewsletterUpdateView(UpdateView):
 class NewsletterDeleteView(DeleteView):
     model = Newsletter
     success_url = '/newsletters'
+
+
+class LogsListView(ListView):
+    model = Logs
