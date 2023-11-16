@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'catalog',
     'mailing_app',
     'django_crontab',
+    'users',
 ]
 
 MIDDLEWARE = [
