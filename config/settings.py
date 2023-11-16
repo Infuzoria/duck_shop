@@ -146,3 +146,5 @@ EMAIL_USE_SSL = False
 CRONJOBS = [
     ('*/5 * * * *', 'mailing_app.cron.start_mailing_job')
 ]
+
+AUTH_USER_MODEL = 'users.User'
