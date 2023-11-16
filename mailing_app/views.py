@@ -55,6 +55,12 @@ class NewsletterCreateView(CreateView):
 
 class NewsletterListView(ListView):
     model = Newsletter
+    success_url = '/newsletters'
+
+    def post(self, request, *args, **kwargs):
+        print('Запущена ручная рассылка')
+        start_mailing_job()
+        return redirect(self.success_url)
 
 
 class NewsletterUpdateView(UpdateView):
