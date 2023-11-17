@@ -5,15 +5,18 @@ from catalog.models import Product, Request, Post, Version
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from pytils.translit import slugify
 from django.urls import reverse
+from django.contrib.auth.mixins import PermissionRequiredMixin
 
 
-class ProductCreateView(CreateView):
+class ProductCreateView(PermissionRequiredMixin, CreateView):
+    permission_required = 'catalog.add_product'
     model = Product
     form_class = ProductForm
     success_url = '/'
 
 
-class ProductUpdateView(UpdateView):
+class ProductUpdateView(PermissionRequiredMixin, UpdateView):
+    permission_required = 'catalog.change_product'
     model = Product
     form_class = ProductForm
     success_url = '/'
@@ -60,12 +63,14 @@ class ProductDetailView(DetailView):
         return context_data
 
 
-class ProductDeleteView(DeleteView):
+class ProductDeleteView(PermissionRequiredMixin, DeleteView):
+    permission_required = 'catalog.delete_product'
     model = Product
     success_url = '/'
 
 
-class PostCreateView(CreateView):
+class PostCreateView(PermissionRequiredMixin, CreateView):
+    permission_required = 'catalog.add_post'
     model = Post
     fields = ('title', 'text', 'image', 'date')
     success_url = '/posts'
@@ -112,7 +117,8 @@ class PostDetailView(DetailView):
         return self.object
 
 
-class PostUpdateView(UpdateView):
+class PostUpdateView(PermissionRequiredMixin, UpdateView):
+    permission_required = 'catalog.change_post'
     model = Post
     fields = ('title', 'text', 'image', 'date')
     success_url = '/posts'
@@ -129,28 +135,33 @@ class PostUpdateView(UpdateView):
         return reverse('catalog:post_view', args=[self.kwargs.get('pk')])
 
 
-class PostDeleteView(DeleteView):
+class PostDeleteView(PermissionRequiredMixin, DeleteView):
+    permission_required = 'catalog.delete_post'
     model = Post
     success_url = '/posts'
 
 
-class VersionCreateView(CreateView):
+class VersionCreateView(PermissionRequiredMixin, CreateView):
+    permission_required = 'catalog.add_version'
     model = Version
     form_class = VersionForm
     success_url = '/versions'
 
 
-class VersionUpdateView(UpdateView):
+class VersionUpdateView(PermissionRequiredMixin, UpdateView):
+    permission_required = 'catalog.change_version'
     model = Version
     form_class = VersionForm
     success_url = '/versions'
 
 
-class VersionListView(ListView):
+class VersionListView(PermissionRequiredMixin, ListView):
+    permission_required = 'catalog.view_version'
     model = Version
 
 
-class VersionDeleteView(DeleteView):
+class VersionDeleteView(PermissionRequiredMixin, DeleteView):
+    permission_required = 'catalog.delete_version'
     model = Version
     success_url = '/versions'
 
