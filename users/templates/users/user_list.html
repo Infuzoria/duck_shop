@@ -32,7 +32,13 @@
             {% endif %}
             <td>{{ object.first_name }}</td>
             <td>{% get_user_group object.pk %}</td>
-            <td>{{ object.is_active }}</td>
+            <td>
+                {% if object.is_active %}
+                    <a href="{% url 'users:toggle_activity' object.pk %}" class="btn btn-sm mt-2 btn-warning">Деактивировать</a>
+                {% else %}
+                    <a href="{% url 'users:toggle_activity' object.pk %}" class="btn btn-sm mt-2 btn-success">Активировать</a>
+                {% endif %}
+            </td>
         </tr>
         {% endfor %}
         </tbody>

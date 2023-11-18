@@ -4,6 +4,8 @@ from users.forms import UserRegisterForm, UserProfileForm
 from users.models import User
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.views.generic import ListView
+from django.shortcuts import get_object_or_404, redirect
+from django.urls import reverse
 
 
 class RegisterView(CreateView):
@@ -25,3 +27,13 @@ class ProfileView(UpdateView):
 class UserListView(ListView):
     #permission_required = 'users.view_user'
     model = User
+
+
+def toggle_activity(request, pk):
+    user_item = get_object_or_404(User, pk=pk)
+    if user_item.is_active:
+        user_item.is_active = False
+    else:
+        user_item.is_active = True
+    user_item.save()
+    return redirect(reverse('users:service_users'))
