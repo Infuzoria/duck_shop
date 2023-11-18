@@ -2,6 +2,8 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView
 from users.forms import UserRegisterForm, UserProfileForm
 from users.models import User
+from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.views.generic import ListView
 
 
 class RegisterView(CreateView):
@@ -18,3 +20,8 @@ class ProfileView(UpdateView):
 
     def get_object(self, queryset=None):
         return self.request.user
+
+
+class UserListView(ListView):
+    #permission_required = 'users.view_user'
+    model = User
