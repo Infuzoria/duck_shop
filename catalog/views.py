@@ -5,7 +5,7 @@ from catalog.models import Product, Request, Post, Version
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from pytils.translit import slugify
 from django.urls import reverse
-from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
 
 
 class ProductCreateView(PermissionRequiredMixin, CreateView):

@@ -3,7 +3,7 @@ from mailing_app.models import Client, Text, Newsletter, Logs
 from django.views.generic import CreateView, ListView, UpdateView, DeleteView
 from mailing_app.cron import start_mailing_job
 from django.shortcuts import redirect
-from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
 
 
 class ClientCreateView(PermissionRequiredMixin, CreateView):

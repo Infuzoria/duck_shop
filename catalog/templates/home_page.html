@@ -10,8 +10,11 @@
                 скульптором Питером Ганином в 1949 году. Такие аксессуары для ванны есть в домах миллионов людей
                 по всему миру и считаются популярным сувениром.</p>
         </div>
-        <a href="/create_product" class="btn btn-warning">Добавить товар</a>
-        <a href="/create_post" class="btn btn-warning">Добавить пост</a>
+        {% if perms.catalog.add_product %}
+            <a href="/create_product" class="btn btn-warning">Добавить товар</a>
+        {% elif perms.catalog.add_post %}
+            <a href="/create_post" class="btn btn-warning">Добавить пост</a>
+        {% endif %}
     </div>
 </div>
 
@@ -32,8 +35,11 @@
                         <h7 class="card-title">{{ object.description|truncatechars:100 }}</h7>
                     </div>
                     <a href="{% product_url object.pk %}" class="btn btn-sm btn-warning">Просмотр</a>
-                    <a href="{% product_update object.pk %}" class="btn btn-sm btn-warning">Редактировать</a>
-                    <a href="{% product_delete object.pk %}" class="btn btn-sm btn-warning">Удалить</a>
+                    {% if perms.catalog.change_product %}
+                        <a href="{% product_update object.pk %}" class="btn btn-sm btn-warning">Редактировать</a>
+                    {% elif perms.catalog.delete_product %}
+                        <a href="{% product_delete object.pk %}" class="btn btn-sm btn-warning">Удалить</a>
+                    {% endif %}
                 </div>
             </div>
         </div>

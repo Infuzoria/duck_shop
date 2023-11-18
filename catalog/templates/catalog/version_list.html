@@ -18,12 +18,18 @@
                     <div class="row justify-content-center">
                         <h7 class="card-title">{{ object.product }}</h7>
                     </div>
-                    <a href="{% version_update object.pk %}" class="btn btn-sm btn-warning">Редактировать</a>
-                    <a href="{% version_delete object.pk %}" class="btn btn-sm btn-warning">Удалить</a>
-                    {% if object.is_active %}
-                        <a href="{% url 'catalog:toggle_activity' object.pk %}" class="btn btn-sm mt-2 btn-warning">Деактивировать</a>
-                    {% else %}
-                        <a href="{% url 'catalog:toggle_activity' object.pk %}" class="btn btn-sm mt-2 btn-success">Активировать</a>
+                    {% if perms.catalog.change_version %}
+                        <a href="{% version_update object.pk %}" class="btn btn-sm btn-warning">Редактировать</a>
+                    {% elif perms.catalog.delete_version %}
+                        <a href="{% version_delete object.pk %}" class="btn btn-sm btn-warning">Удалить</a>
+                    {% endif %}
+
+                    {% if perms.catalog.change_version %}
+                        {% if object.is_active %}
+                            <a href="{% url 'catalog:toggle_activity' object.pk %}" class="btn btn-sm mt-2 btn-warning">Деактивировать</a>
+                        {% else %}
+                            <a href="{% url 'catalog:toggle_activity' object.pk %}" class="btn btn-sm mt-2 btn-success">Активировать</a>
+                        {% endif %}
                     {% endif %}
                 </div>
             </div>
