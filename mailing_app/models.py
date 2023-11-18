@@ -1,4 +1,5 @@
 from django.db import models
+from users.models import User
 
 NULLABLE = {'blank': True, 'null': True}
 
@@ -49,6 +50,8 @@ class Newsletter(models.Model):
     status = models.CharField(default='created', max_length=20, choices=STATUS, verbose_name='Статус рассылки')
     message = models.ForeignKey(Text, on_delete=models.CASCADE, verbose_name='Текст рассылки')
     client = models.ManyToManyField(Client)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, **NULLABLE, verbose_name='Создатель рассылки')
+    is_active = models.BooleanField(default=True, verbose_name='Признак активности')
 
     def __str__(self):
         return f'{self.start_time} {self.period} {self.status}'

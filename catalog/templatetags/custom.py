@@ -68,3 +68,16 @@ def get_user_group(user_id):
     if rows[0]:
         return rows[0]
     return ''
+
+
+@register.simple_tag
+def get_user_email(user_id):
+    with connection.cursor() as crs:
+        crs.execute("select users_user.email from mailing_app_newsletter "
+                    "join users_user on mailing_app_newsletter.owner_id = users_user.id "
+                    "where owner_id = %s;", [user_id])
+        rows = crs.fetchone()
+
+    if rows[0]:
+        return rows[0]
+    return ''

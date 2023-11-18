@@ -28,6 +28,7 @@
             <th scope="col">Время окончания</th>
             <th scope="col">Время последней рассылки</th>
             <th scope="col">Периодичность</th>
+            <th scope="col">Создатель</th>
             <th scope="col">Текст рассылки</th>
             <th scope="col"></th>
         </tr>
@@ -46,10 +47,16 @@
             {% elif object.period == 'month' %}
             <td>Раз в месяц</td>
             {% endif %}
+            <td>{% get_user_email object.owner_id %}</td>
             <td>{{ object.message|truncatechars:100 }}</td>
             <td>
                 <a href="{% url 'mailing_app:update_newsletter' object.pk %}" class="btn btn-sm mb-1 btn-warning">edit</a>
                 <a href="{% url 'mailing_app:delete_newsletter' object.pk %}" class="btn btn-sm btn-warning">delete</a>
+                {% if object.is_active %}
+                    <a href="{% url 'mailing_app:toggle_activ' object.pk %}" class="btn btn-sm mt-2 btn-warning">Деактивировать</a>
+                {% else %}
+                    <a href="{% url 'mailing_app:toggle_activ' object.pk %}" class="btn btn-sm mt-2 btn-success">Активировать</a>
+                {% endif %}
             </td>
         </tr>
         {% endfor %}

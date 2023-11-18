@@ -2,8 +2,9 @@ from mailing_app.forms import ClientForm, TextForm, NewsletterForm
 from mailing_app.models import Client, Text, Newsletter, Logs
 from django.views.generic import CreateView, ListView, UpdateView, DeleteView
 from mailing_app.cron import start_mailing_job
-from django.shortcuts import redirect
+from django.shortcuts import get_object_or_404, redirect
 from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
+from django.urls import reverse
 
 
 class ClientCreateView(PermissionRequiredMixin, CreateView):
@@ -90,3 +91,13 @@ class NewsletterDeleteView(PermissionRequiredMixin, DeleteView):
 class LogsListView(PermissionRequiredMixin, ListView):
     permission_required = 'mailing_app.view_logs'
     model = Logs
+
+
+def toggle_activity(request, pk):
+    newsletter_item = get_object_or_404(Newsletter, pk=pk)
+    if newsletter_item.is_active:
+        newsletter_item.is_active = False
+    else:
+        newsletter_item.is_active = True
+    newsletter_item.save()
+    return redirect(reverse('mailing_app:list_of_newsletters'))
