@@ -106,6 +106,14 @@ class NewsletterUpdateView(PermissionRequiredMixin, UpdateView):
     form_class = NewsletterForm
     success_url = '/newsletters'
 
+    def get_form(self, form_class=None):
+        form = super(NewsletterUpdateView, self).get_form(form_class)
+        print(self.request.user.id)
+        form.fields['client'].queryset = Client.objects.filter(owner_id=self.request.user.id)
+        form.fields['message'].queryset = Text.objects.filter(owner_id=self.request.user.id)
+        form.fields['owner'].queryset = User.objects.filter(id=self.request.user.id)
+        return form
+
 
 class NewsletterDeleteView(PermissionRequiredMixin, DeleteView):
     permission_required = 'mailing_app.delete_newsletter'
