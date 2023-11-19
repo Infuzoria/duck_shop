@@ -58,10 +58,10 @@
                         Управление рассылками
                     </button>
                     <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                        {% if perms.mailing_app.view_client %}
+                        {% if user.is_user %}
                             <a class="dropdown-item" href="/clients/">Клиенты</a>
-                        {% elif perms.mailing_app.view_text %}
                             <a class="dropdown-item" href="/texts/">Сообщения</a>
+                            <a class="dropdown-item" href="/newsletters/">Все рассылки</a>
                         {% elif user.is_manager %}
                             <a class="dropdown-item" href="/newsletters/">Все рассылки</a>
                             <a class="dropdown-item" href="{% url 'users:service_users' %}">Пользователи</a>

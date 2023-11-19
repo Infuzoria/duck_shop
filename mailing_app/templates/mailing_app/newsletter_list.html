@@ -30,18 +30,23 @@
             <th scope="col">Время окончания</th>
             <th scope="col">Время последней рассылки</th>
             <th scope="col">Периодичность</th>
-            <th scope="col">Создатель</th>
-            <th scope="col">Текст рассылки</th>
+            {% if user.is_manager %}
+                <th scope="col">Создатель</th>
+            {% elif user.is_user %}
+                <th scope="col">Статус</th>
+            {% endif %}
             <th scope="col"></th>
         </tr>
         </thead>
         <tbody>
         {% for object in object_list%}
+
         <tr>
             <th scope="row">{{ object.id }}</th>
             <td>{{ object.start_time }}</td>
             <td>{{ object.stop_time }}</td>
             <td>{{ object.last_time }}</td>
+
             {% if object.period == 'day'%}
             <td>Раз в день</td>
             {% elif object.period == 'week' %}
@@ -49,7 +54,17 @@
             {% elif object.period == 'month' %}
             <td>Раз в месяц</td>
             {% endif %}
-            <td>{% get_user_email object.owner_id %}</td>
+
+            {% if user.is_manager %}
+                <td>{% get_user_email object.owner_id %}</td>
+            {% elif user.is_user %}
+                {% if object.is_active %}
+                    <td class="table-success">{{ object.is_active }}</td>
+                {% else %}
+                    <td class="table-danger">{{ object.is_active }}</td>
+                {% endif %}
+            {% endif %}
+
             <td>{{ object.message|truncatechars:100 }}</td>
             <td>
                 {% if user.is_user %}
