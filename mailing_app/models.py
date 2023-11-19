@@ -21,6 +21,7 @@ class Client(models.Model):
 class Text(models.Model):
     topic = models.CharField(max_length=100, verbose_name='Тема письма')
     text = models.TextField(verbose_name='Тело письма')
+    owner_id = models.ForeignKey(User, on_delete=models.CASCADE, **NULLABLE, verbose_name='id создателя')
 
     def __str__(self):
         return f'{self.text}'
