@@ -79,6 +79,13 @@ class NewsletterListView(PermissionRequiredMixin,  ListView):
         start_mailing_job()
         return redirect(self.success_url)
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        if self.request.user.is_user():
+            queryset = queryset.filter(owner_id=self.request.user.id)
+
+        return queryset
+
 
 class NewsletterUpdateView(PermissionRequiredMixin, UpdateView):
     permission_required = 'mailing_app.change_newsletter'
