@@ -77,6 +77,7 @@ class NewsletterCreateView(PermissionRequiredMixin, CreateView):
         form = super(NewsletterCreateView, self).get_form(form_class)
         print(self.request.user.id)
         form.fields['client'].queryset = Client.objects.filter(owner_id=self.request.user.id)
+        form.fields['message'].queryset = Text.objects.filter(owner_id=self.request.user.id)
         return form
 
 
