@@ -125,6 +125,13 @@ class LogsListView(PermissionRequiredMixin, ListView):
     permission_required = 'mailing_app.view_logs'
     model = Logs
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        if self.request.user.is_user():
+            queryset = queryset.filter(owner_id=self.request.user.id)
+
+        return queryset
+
 
 def toggle_activity(request, pk):
     newsletter_item = get_object_or_404(Newsletter, pk=pk)

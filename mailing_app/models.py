@@ -69,6 +69,7 @@ class Logs(models.Model):
     error_msg = models.CharField(default='None', max_length=300, verbose_name='Ответ почтового сервера')
     client = models.ForeignKey(Client, on_delete=models.CASCADE, verbose_name='Пользователь')
     newsletter = models.ForeignKey(Newsletter, on_delete=models.CASCADE, verbose_name='Рассылка')
+    owner_id = models.ForeignKey(User, on_delete=models.CASCADE, **NULLABLE, verbose_name='id создателя рассылки')
 
     def __str__(self):
         return f'{self.date} {self.status} ({self.error_msg})'
