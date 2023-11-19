@@ -25,6 +25,7 @@ class ProductUpdateView(PermissionRequiredMixin, UpdateView):
 class ProductListView(ListView):
     model = Product
     template_name = 'home_page.html'
+    queryset = Product.objects.order_by('?')[:3]
 
 
 class RequestCreateView(CreateView):
@@ -90,6 +91,7 @@ class PostListView(ListView):
     def get_queryset(self, *args, **kwargs):
         queryset = super().get_queryset(*args, **kwargs)
         queryset = queryset.filter(is_published=True)
+        queryset = queryset.order_by('?')[:3]
         return queryset
 
 
