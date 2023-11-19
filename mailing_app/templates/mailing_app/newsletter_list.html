@@ -9,12 +9,14 @@
             <p class="lead">В этом разделе находятся все рассылки. Здесь можно создавать удалять и редактировать рассылки.</p>
         </div>
         <div class="row ml-2">
-            <a href="/create_newsletter" class="btn btn-warning mr-2">Добавить рассылку</a>
-            <form action="{% url 'mailing_app:list_of_newsletters' %}" method="post">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-warning mr-2">Запустить вручную</button>
-            </form>
-            <a href="/logs" class="btn btn-warning">Посмотреть логи</a>
+            {% if user.is_user %}
+                <a href="/create_newsletter" class="btn btn-warning mr-2">Добавить рассылку</a>
+                <form action="{% url 'mailing_app:list_of_newsletters' %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-warning mr-2">Запустить вручную</button>
+                </form>
+                <a href="/logs" class="btn btn-warning">Посмотреть логи</a>
+            {% endif %}
         </div>
     </div>
 </div>
@@ -50,12 +52,15 @@
             <td>{% get_user_email object.owner_id %}</td>
             <td>{{ object.message|truncatechars:100 }}</td>
             <td>
-                <a href="{% url 'mailing_app:update_newsletter' object.pk %}" class="btn btn-sm mb-1 btn-warning">edit</a>
-                <a href="{% url 'mailing_app:delete_newsletter' object.pk %}" class="btn btn-sm btn-warning">delete</a>
-                {% if object.is_active %}
-                    <a href="{% url 'mailing_app:toggle_activ' object.pk %}" class="btn btn-sm mt-2 btn-warning">Деактивировать</a>
-                {% else %}
-                    <a href="{% url 'mailing_app:toggle_activ' object.pk %}" class="btn btn-sm mt-2 btn-success">Активировать</a>
+                {% if user.is_user %}
+                    <a href="{% url 'mailing_app:update_newsletter' object.pk %}" class="btn btn-sm mb-1 btn-warning">edit</a>
+                    <a href="{% url 'mailing_app:delete_newsletter' object.pk %}" class="btn btn-sm btn-warning">delete</a>
+                {% elif user.is_manager %}
+                    {% if object.is_active %}
+                        <a href="{% url 'mailing_app:toggle_activ' object.pk %}" class="btn btn-sm mt-2 btn-warning">Деактивировать</a>
+                    {% else %}
+                        <a href="{% url 'mailing_app:toggle_activ' object.pk %}" class="btn btn-sm mt-2 btn-success">Активировать</a>
+                    {% endif %}
                 {% endif %}
             </td>
         </tr>

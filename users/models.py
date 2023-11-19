@@ -14,3 +14,8 @@ class User(AbstractUser):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
+    def is_manager(self):
+        return self.groups.filter(name='manager').exists()
+
+    def is_user(self):
+        return self.groups.filter(name='user').exists()

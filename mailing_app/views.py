@@ -3,7 +3,7 @@ from mailing_app.models import Client, Text, Newsletter, Logs
 from django.views.generic import CreateView, ListView, UpdateView, DeleteView
 from mailing_app.cron import start_mailing_job
 from django.shortcuts import get_object_or_404, redirect
-from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
+from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse
 
 
@@ -64,7 +64,7 @@ class NewsletterCreateView(PermissionRequiredMixin, CreateView):
     success_url = '/newsletters'
 
 
-class NewsletterListView(PermissionRequiredMixin, ListView):
+class NewsletterListView(PermissionRequiredMixin,  ListView):
     permission_required = 'mailing_app.view_newsletter'
     model = Newsletter
     success_url = '/newsletters'
