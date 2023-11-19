@@ -1,4 +1,5 @@
 from django.db import models
+from users.models import User
 
 NULLABLE = {'blank': True, 'null': True}
 
@@ -7,6 +8,7 @@ class Client(models.Model):
     email = models.CharField(max_length=100, verbose_name='Email пользователя')
     name = models.CharField(max_length=100, verbose_name='ФИО пользователя')
     text = models.TextField(verbose_name='Комментарий')
+    owner_id = models.ForeignKey(User, **NULLABLE, on_delete=models.CASCADE, verbose_name='id создателя')
 
     def __str__(self):
         return f'{self.name} ({self.email})'
@@ -19,6 +21,7 @@ class Client(models.Model):
 class Text(models.Model):
     topic = models.CharField(max_length=100, verbose_name='Тема письма')
     text = models.TextField(verbose_name='Тело письма')
+    owner_id = models.ForeignKey(User, on_delete=models.CASCADE, **NULLABLE, verbose_name='id создателя')
 
     def __str__(self):
         return f'{self.text}'
@@ -49,6 +52,8 @@ class Newsletter(models.Model):
     status = models.CharField(default='created', max_length=20, choices=STATUS, verbose_name='Статус рассылки')
     message = models.ForeignKey(Text, on_delete=models.CASCADE, verbose_name='Текст рассылки')
     client = models.ManyToManyField(Client)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, **NULLABLE, verbose_name='Создатель рассылки')
+    is_active = models.BooleanField(default=True, verbose_name='Признак активности')
 
     def __str__(self):
         return f'{self.start_time} {self.period} {self.status}'
@@ -64,6 +69,7 @@ class Logs(models.Model):
     error_msg = models.CharField(default='None', max_length=300, verbose_name='Ответ почтового сервера')
     client = models.ForeignKey(Client, on_delete=models.CASCADE, verbose_name='Пользователь')
     newsletter = models.ForeignKey(Newsletter, on_delete=models.CASCADE, verbose_name='Рассылка')
+    owner_id = models.ForeignKey(User, on_delete=models.CASCADE, **NULLABLE, verbose_name='id создателя рассылки')
 
     def __str__(self):
         return f'{self.date} {self.status} ({self.error_msg})'
