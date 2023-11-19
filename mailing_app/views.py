@@ -73,6 +73,12 @@ class NewsletterCreateView(PermissionRequiredMixin, CreateView):
     form_class = NewsletterForm
     success_url = '/newsletters'
 
+    def get_form(self, form_class=None):
+        form = super(NewsletterCreateView, self).get_form(form_class)
+        print(self.request.user.id)
+        form.fields['client'].queryset = Client.objects.filter(owner_id=self.request.user.id)
+        return form
+
 
 class NewsletterListView(PermissionRequiredMixin,  ListView):
     permission_required = 'mailing_app.view_newsletter'
