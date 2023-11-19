@@ -1,5 +1,5 @@
 from mailing_app.forms import ClientForm, TextForm, NewsletterForm
-from mailing_app.models import Client, Text, Newsletter, Logs
+from mailing_app.models import Client, Text, Newsletter, Logs, User
 from django.views.generic import CreateView, ListView, UpdateView, DeleteView
 from mailing_app.cron import start_mailing_job
 from django.shortcuts import get_object_or_404, redirect
@@ -78,6 +78,7 @@ class NewsletterCreateView(PermissionRequiredMixin, CreateView):
         print(self.request.user.id)
         form.fields['client'].queryset = Client.objects.filter(owner_id=self.request.user.id)
         form.fields['message'].queryset = Text.objects.filter(owner_id=self.request.user.id)
+        form.fields['owner'].queryset = User.objects.filter(id=self.request.user.id)
         return form
 
 
