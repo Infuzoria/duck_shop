@@ -89,7 +89,7 @@ class NewsletterListView(PermissionRequiredMixin,  ListView):
 
     def post(self, request, *args, **kwargs):
         print('Запущена ручная рассылка')
-        start_mailing_job()
+        start_mailing_job(self.request.user.id)
         return redirect(self.success_url)
 
     def get_queryset(self):

@@ -5,13 +5,13 @@ from datetime import datetime
 from django.conf import settings
 
 
-def start_mailing_job():
+def start_mailing_job(user_id):
 
     periodicity = {'day': 1, 'week': 7, 'month': 31}
     is_successfully = False
 
-    # Получили список всех рассылок
-    all_newsletters = Newsletter.objects.all()
+    # Получили список рассылок пользователя
+    all_newsletters = Newsletter.objects.filter(owner=user_id, is_active=True)
 
     # Проходимся по всем рассылкам и проверяем время
     for newsletter in all_newsletters:
