@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 {% block content %}
 {% load custom %}
+
+{% if user.is_user or user.is_manager %}
 <div class="row mt-5">
     <div class="col-12">
         <div class="card rounded-3 shadow-sm">
@@ -10,13 +12,13 @@
             <div class="card-body">
                 <div class="card-body">
                     <div class="row justify-content-center">
-                        <h5 class="card-title">Общее количество рассылок</h5>
+                        <h5 class="card-title">Общее количество рассылок {{ total_mailings }}</h5>
                     </div>
                     <div class="row justify-content-center">
-                        <h5 class="card-title">Количество активных рассылок</h5>
+                        <h5 class="card-title">Количество активных рассылок {{ active_mailings }}</h5>
                     </div>
                     <div class="row justify-content-center">
-                        <h5 class="card-title">Количество уникальных клиентов</h5>
+                        <h5 class="card-title">Количество уникальных клиентов {{ total_clients }}</h5>
                     </div>
                 </div>
             </div>
@@ -28,6 +30,7 @@
         {% endif %}
     </div>
 </div>
+{% endif %}
 
 <div class="container">
 

@@ -2,6 +2,7 @@ from django.shortcuts import get_object_or_404, redirect
 
 from catalog.forms import ProductForm, VersionForm
 from catalog.models import Product, Request, Post, Version
+from mailing_app.models import Newsletter, Client
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from pytils.translit import slugify
 from django.urls import reverse
@@ -26,6 +27,20 @@ class ProductListView(ListView):
     model = Product
     template_name = 'home_page.html'
     queryset = Product.objects.order_by('?')[:3]
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user = self.request.user
+
+        if user.groups.filter(name='manager').exists():
+            context['total_mailings'] = Newsletter.objects.all().count()
+            context['active_mailings'] = Newsletter.objects.filter(is_active=True).count()
+            context['total_clients'] = Client.objects.all().distinct('email').count()
+        elif user.groups.filter(name='user').exists():
+            context['total_mailings'] = Newsletter.objects.filter(owner=user).count()
+            context['active_mailings'] = Newsletter.objects.filter(owner=user, is_active=True).count()
+            context['total_clients'] = Client.objects.filter(owner_id=user.id).count()
+        return context
 
 
 class RequestCreateView(CreateView):
@@ -166,6 +181,22 @@ class VersionDeleteView(PermissionRequiredMixin, DeleteView):
     permission_required = 'catalog.delete_version'
     model = Version
     success_url = '/versions'
+
+
+class NewsletterListView(LoginRequiredMixin, ListView):
+    model = Newsletter
+    template_name = 'home_page.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user = self.request.user
+
+        if user.groups.filter(name='manager').exists():
+            context['total_mailings'] = Newsletter.objects.all().count()
+        else:
+            context['total_mailings'] = Newsletter.objects.filter(user=user).count()
+
+        return context
 
 
 def toggle_activity(request, pk):
