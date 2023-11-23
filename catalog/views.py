@@ -6,6 +6,8 @@ from mailing_app.models import Newsletter, Client
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse
 from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
+from config import settings
+from django.core.cache import cache
 
 
 class ProductCreateView(PermissionRequiredMixin, CreateView):
@@ -59,6 +61,7 @@ class ProductDetailView(DetailView):
         return queryset
 
     def get_context_data(self, *args, **kwargs):
+        context_data = super().get_context_data(**kwargs)
         versions = Version.objects.filter(product=self.kwargs.get('pk'), is_active=True)
         if len(versions) > 0:
             active_version = versions[len(versions)-1]
@@ -66,10 +69,26 @@ class ProductDetailView(DetailView):
         else:
             active_version = None
 
-        context_data = super().get_context_data(**kwargs)
+        if settings.CACHE_ENABLED:
+            description_key = f'product_description_{self.object.pk}'
+            photo_key = f'product_photo_{self.object.pk}'
+            product_description = cache.get(description_key)
+            product_photo = cache.get(photo_key)
+
+            if product_description is None:
+                product_description = Product.objects.filter(id=self.object.pk)[0].__dict__['description']
+                cache.set(description_key, product_description)
+            elif product_photo is None:
+                product_photo = Product.objects.filter(id=self.object.pk)[0].__dict__['image']
+                cache.set(photo_key, product_photo)
+
+        else:
+            product_description = Product.objects.filter(id=self.kwargs.get('pk'))[0].__dict__['description']
+            product_photo = Product.objects.filter(id=self.kwargs.get('pk'))[0].__dict__['image']
+
         context_data['object_name'] = Product.objects.filter(id=self.kwargs.get('pk'))[0].__dict__['name']
-        context_data['object_description'] = Product.objects.filter(id=self.kwargs.get('pk'))[0].__dict__['description']
-        context_data['object_image'] = Product.objects.filter(id=self.kwargs.get('pk'))[0].__dict__['image']
+        context_data['object_description'] = product_description
+        context_data['object_image'] = product_photo
         if active_version:
             self.object.active_version = str(active_version)
             self.object.save()

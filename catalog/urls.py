@@ -16,4 +16,5 @@ urlpatterns = [
     path('delete_version/<int:pk>/', VersionDeleteView.as_view(), name='delete_version'),
     path('update_version/<int:pk>/', VersionUpdateView.as_view(), name='update_version'),
     path('activity/<int:pk>/', toggle_activity, name='toggle_activity'),
+    path('product/<int:pk>/', ProductDetailView.as_view(), name='product_view'),
 ]
