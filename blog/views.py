@@ -4,6 +4,8 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from pytils.translit import slugify
 from django.urls import reverse
 from django.contrib.auth.mixins import PermissionRequiredMixin
+from config import settings
+from django.core.cache import cache
 
 
 class PostCreateView(PermissionRequiredMixin, CreateView):
@@ -41,9 +43,27 @@ class PostDetailView(DetailView):
 
     def get_context_data(self, *args, **kwargs):
         context_data = super().get_context_data(**kwargs)
+
+        if settings.CACHE_ENABLED:
+            text_key = f'post_text_{self.object.pk}'
+            photo_key = f'post_photo_{self.object.pk}'
+            post_text = cache.get(text_key)
+            post_photo = cache.get(photo_key)
+
+            if post_text is None:
+                post_text = Post.objects.filter(id=self.object.pk)[0].__dict__['text']
+                cache.set(text_key, post_text)
+            elif post_photo is None:
+                post_photo = Post.objects.filter(id=self.object.pk)[0].__dict__['image']
+                cache.set(photo_key, post_photo)
+
+        else:
+            post_text = Post.objects.filter(id=self.kwargs.get('pk'))[0].__dict__['text']
+            post_photo = Post.objects.filter(id=self.kwargs.get('pk'))[0].__dict__['image']
+
         context_data['object_title'] = Post.objects.filter(id=self.kwargs.get('pk'))[0].__dict__['title']
-        context_data['object_text'] = Post.objects.filter(id=self.kwargs.get('pk'))[0].__dict__['text']
-        context_data['object_image'] = Post.objects.filter(id=self.kwargs.get('pk'))[0].__dict__['image']
+        context_data['object_text'] = post_text
+        context_data['object_image'] = post_photo
         context_data['views_count'] = Post.objects.filter(id=self.kwargs.get('pk'))[0].__dict__['views_count']
 
         return context_data

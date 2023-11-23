@@ -4,7 +4,6 @@ from catalog.forms import ProductForm, VersionForm
 from catalog.models import Product, Request, Version
 from mailing_app.models import Newsletter, Client
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from pytils.translit import slugify
 from django.urls import reverse
 from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
 
