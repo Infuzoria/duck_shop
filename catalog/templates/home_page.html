@@ -27,7 +27,7 @@
 
         {% if user.is_content_manager %}
             <a href="/create_product" class="btn mt-2 btn-warning">Добавить товар</a>
-            <a href="/create_post" class="btn mt-2 btn-warning">Добавить пост</a>
+            <a href="{% url 'blog:create_post' %}" class="btn mt-2 btn-warning">Добавить пост</a>
         {% endif %}
     </div>
 </div>

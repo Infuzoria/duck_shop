@@ -11,7 +11,7 @@
                         {% csrf_token %}
                         <p>Вы действительно желаете удалить пост {{object.title}}?</p>
                         <button type="submit" class="btn btn-danger">Удалить</button>
-                        <a href="/posts" class="btn btn-warning">Отмена</a>
+                        <a href="{% url 'blog:list_of_posts' %}" class="btn btn-warning">Отмена</a>
                     </form>
                 </div>
             </div>
