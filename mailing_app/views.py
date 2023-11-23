@@ -75,7 +75,6 @@ class NewsletterCreateView(PermissionRequiredMixin, CreateView):
 
     def get_form(self, form_class=None):
         form = super(NewsletterCreateView, self).get_form(form_class)
-        print(self.request.user.id)
         form.fields['client'].queryset = Client.objects.filter(owner_id=self.request.user.id)
         form.fields['message'].queryset = Text.objects.filter(owner_id=self.request.user.id)
         form.fields['owner'].queryset = User.objects.filter(id=self.request.user.id)
@@ -108,7 +107,6 @@ class NewsletterUpdateView(PermissionRequiredMixin, UpdateView):
 
     def get_form(self, form_class=None):
         form = super(NewsletterUpdateView, self).get_form(form_class)
-        print(self.request.user.id)
         form.fields['client'].queryset = Client.objects.filter(owner_id=self.request.user.id)
         form.fields['message'].queryset = Text.objects.filter(owner_id=self.request.user.id)
         form.fields['owner'].queryset = User.objects.filter(id=self.request.user.id)

@@ -56,4 +56,5 @@ def start_mailing_job(user_id):
                     error_msg=server_response,
                     client=client,
                     newsletter=newsletter,
+                    owner_id_id=newsletter.owner.id
                 )

@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404, redirect
 
 from catalog.forms import ProductForm, VersionForm
-from catalog.models import Product, Request, Post, Version
+from catalog.models import Product, Request, Version
 from mailing_app.models import Newsletter, Client
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from pytils.translit import slugify
@@ -85,7 +85,7 @@ class ProductDeleteView(PermissionRequiredMixin, DeleteView):
     success_url = '/'
 
 
-class PostCreateView(PermissionRequiredMixin, CreateView):
+"""class PostCreateView(PermissionRequiredMixin, CreateView):
     permission_required = 'catalog.add_post'
     model = Post
     fields = ('title', 'text', 'image', 'date')
@@ -155,7 +155,7 @@ class PostUpdateView(PermissionRequiredMixin, UpdateView):
 class PostDeleteView(PermissionRequiredMixin, DeleteView):
     permission_required = 'catalog.delete_post'
     model = Post
-    success_url = '/posts'
+    success_url = '/posts'"""
 
 
 class VersionCreateView(PermissionRequiredMixin, CreateView):

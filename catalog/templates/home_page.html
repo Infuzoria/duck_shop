@@ -2,9 +2,9 @@
 {% block content %}
 {% load custom %}
 
-{% if user.is_user or user.is_manager %}
 <div class="row mt-5">
     <div class="col-12">
+        {% if user.is_user or user.is_manager %}
         <div class="card rounded-3 shadow-sm">
             <div class="card-header">
                 <h3>Статистика</h3>
@@ -23,14 +23,14 @@
                 </div>
             </div>
         </div>
-        {% if perms.catalog.add_product %}
+        {% endif %}
+
+        {% if user.is_content_manager %}
             <a href="/create_product" class="btn mt-2 btn-warning">Добавить товар</a>
-        {% elif perms.catalog.add_post %}
             <a href="/create_post" class="btn mt-2 btn-warning">Добавить пост</a>
         {% endif %}
     </div>
 </div>
-{% endif %}
 
 <div class="container">
 
