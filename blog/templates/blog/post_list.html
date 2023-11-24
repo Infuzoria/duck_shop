@@ -18,12 +18,10 @@
                     <div class="row justify-content-center">
                         <h7 class="card-title">{{ object.text|truncatechars:100 }}</h7>
                     </div>
-                    <a href="{% post_url object.pk %}" class="btn btn-sm btn-warning">Читать</a>
-                    {% if perms.catalog.change_post %}
-                        <a href="{% post_update object.pk %}" class="btn btn-sm btn-warning">Редактировать</a>
-                    {% endif %}
-                    {% if perms.catalog.delete_post %}
-                        <a href="{% post_delete object.pk %}" class="btn btn-sm btn-warning">Удалить</a>
+                    <a href="{% url 'blog:post_view' object.pk %}" class="btn btn-sm btn-warning">Читать</a>
+                    {% if user.is_content_manager %}
+                        <a href="{% url 'blog:post_update' object.pk %}" class="btn btn-sm btn-warning">Редактировать</a>
+                        <a href="{% url 'blog:post_delete' object.pk %}" class="btn btn-sm btn-warning">Удалить</a>
                     {% endif %}
                 </div>
             </div>

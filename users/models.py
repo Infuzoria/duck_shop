@@ -19,3 +19,6 @@ class User(AbstractUser):
 
     def is_user(self):
         return self.groups.filter(name='user').exists()
+
+    def is_content_manager(self):
+        return self.groups.filter(name='content_manager').exists()
