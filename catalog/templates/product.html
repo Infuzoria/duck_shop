@@ -35,8 +35,11 @@
             {% if active_version %}
                 <p>Текущая версия: {{active_version}}</p>
             {% endif %}
-            <a href="/create_version" class="btn btn-warning">Добавить версию</a>
-            <a href="/versions" class="btn btn-warning">Посмотреть все версии</a>
+            {% if perms.catalog.add_version %}
+                <a href="/create_version" class="btn btn-warning">Добавить версию</a>
+            {% elif perms.catalog.view_version %}
+                <a href="/versions" class="btn btn-warning">Посмотреть все версии</a>
+            {% endif %}
 
         </div><!-- /.blog-catalog -->
 

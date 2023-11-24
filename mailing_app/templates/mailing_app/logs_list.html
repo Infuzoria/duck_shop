@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load custom %}
+
+<div class="row mt-5">
+    <div class="col-12">
+        <div class="jumbotron bg-warning text-white">
+            <h1>Все логи</h1>
+            <p class="lead">Здесь отображена вся информация по рассылкам (логи). Можно увидеть время последней рассылки,
+            пользователя, статус рассылки и т.д.</p>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-5">
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th scope="col">№</th>
+            <th scope="col">Время отправки</th>
+            <th scope="col">Статус</th>
+            <th scope="col">Ошибка</th>
+            <th scope="col">Пользователь</th>
+            <th scope="col">Текст рассылки</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for object in object_list%}
+        {% if object.status %}
+            <tr class="table-success">
+                <th scope="row">{{ object.id }}</th>
+                <td>{{ object.date }}</td>
+                <td>{{ object.status }}</td>
+                <td>{{ object.error_msg }}</td>
+                <td>{{ object.client.email }}</td>
+                <td>{{ object.newsletter.message|truncatechars:100 }}</td>
+            </tr>
+        {% else %}
+            <tr class="table-warning">
+                <th scope="row">{{ object.id }}</th>
+                <td>{{ object.date }}</td>
+                <td>{{ object.status }}</td>
+                <td>{{ object.error_msg }}</td>
+                <td>{{ object.client.email }}</td>
+                <td>{{ object.newsletter.message|truncatechars:100 }}</td>
+            </tr>
+        {% endif %}
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

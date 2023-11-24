@@ -1,5 +1,6 @@
 from django import template
 from config import settings
+from django.db import connection
 
 register = template.Library()
 
@@ -54,3 +55,29 @@ def product_delete(pk):
 @register.simple_tag
 def version_delete(pk):
     return f"/delete_version/{pk}"
+
+
+@register.simple_tag
+def get_user_group(user_id):
+    with connection.cursor() as crs:
+        crs.execute("select auth_group.name from users_user left join users_user_groups on "
+                    "users_user.id = users_user_groups.user_id left join auth_group on "
+                    "users_user_groups.group_id = auth_group.id where users_user.id = %s;", [user_id])
+        rows = crs.fetchone()
+
+    if rows[0]:
+        return rows[0]
+    return ''
+
+
+@register.simple_tag
+def get_user_email(user_id):
+    with connection.cursor() as crs:
+        crs.execute("select users_user.email from mailing_app_newsletter "
+                    "join users_user on mailing_app_newsletter.owner_id = users_user.id "
+                    "where owner_id = %s;", [user_id])
+        rows = crs.fetchone()
+
+    if rows[0]:
+        return rows[0]
+    return ''

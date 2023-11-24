@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load custom %}
+
+<div class="row mt-5">
+    <div class="col-12">
+        <h3>Пользователи сервиса</h3>
+    </div>
+</div>
+
+<div class="container mt-5">
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th scope="col">№</th>
+            <th scope="col">Email</th>
+            <th scope="col">Телефон</th>
+            <th scope="col">Имя</th>
+            <th scope="col">Группа</th>
+            <th scope="col">Активность</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for object in object_list%}
+        <tr>
+            <th scope="row">{{ object.id }}</th>
+            <td>{{ object.email }}</td>
+            {% if object.phone %}
+                <td>{{ object.phone }}</td>
+            {% else %}
+                <td></td>
+            {% endif %}
+            <td>{{ object.first_name }}</td>
+            <td>{% get_user_group object.pk %}</td>
+            <td>
+                {% if object.is_active %}
+                    <a href="{% url 'users:toggle_activity' object.pk %}" class="btn btn-sm mt-2 btn-warning">Деактивировать</a>
+                {% else %}
+                    <a href="{% url 'users:toggle_activity' object.pk %}" class="btn btn-sm mt-2 btn-success">Активировать</a>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
